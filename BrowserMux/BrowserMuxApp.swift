@@ -46,7 +46,7 @@ struct BrowserMuxApp: App {
         group = MultiThreadedEventLoopGroup(numberOfThreads: 1)
         let promise: EventLoopFuture<Void>
         do {
-            promise = try listenOnControlSocket(group: group, handler: EchoHandler())
+            promise = try listenOnControlSocket(group: group, handler: HTTPHandler())
         } catch {
             presentError(err: error)
             exit(EXIT_FAILURE)
