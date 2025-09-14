@@ -9,6 +9,24 @@ import Foundation
 import NIO
 import NIOPosix
 import SwiftUI
+import Cocoa
+
+struct PresentableError: Error {
+    let messageText: String
+    let informativeText: String
+    let innerError: any Error
+}
+
+@MainActor
+func presentError(err: PresentableError) {
+    let alert = NSAlert()
+    alert.messageText = err.messageText
+    alert.informativeText = err.informativeText
+    alert.alertStyle = .warning
+    alert.addButton(withTitle: "OK")
+    print("fatal error: \(err.innerError)")
+    let _ = alert.runModal()
+}
 
 @main
 struct BrowserMuxApp: App {
@@ -25,8 +43,25 @@ struct BrowserMuxApp: App {
 
     init() {
         group = MultiThreadedEventLoopGroup(numberOfThreads: 1)
-        let _ = try! asyncManageControlSocket(group: group, handler: EchoHandler())
+        let promise: EventLoopFuture<Void>
+        do {
+            promise = try listenOnControlSocket(group: group, handler: EchoHandler())
+        } catch {
+            presentError(err: error)
+            exit(EXIT_FAILURE)
+        }
+        promise.whenFailure({ err in
+            Task {
+                await presentError(err:
+                    PresentableError(
+                        messageText: "Failed to listen for control instructions",
+                        informativeText: "An unexpected error occurred while listening for control instructions. You may need to restart the application to ensure proper functioning. Additional technical details have been printed to the console.",
+                        innerError: err)
+                )
+            }
+        })
     }
+
     func cleanup() {
         try! group.syncShutdownGracefully()
     }

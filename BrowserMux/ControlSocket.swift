@@ -2,19 +2,9 @@ import Foundation
 import NIO
 import NIOPosix
 
-func debugSyncManageControlSocket(
-    handler: any ChannelInboundHandler & Sendable
-) {
-    let group = MultiThreadedEventLoopGroup(numberOfThreads: System.coreCount)
-    defer {
-        try! group.syncShutdownGracefully()
-    }
-    try! asyncManageControlSocket(group: group, handler: EchoHandler()).wait()
-}
-
-func asyncManageControlSocket(
+func listenOnControlSocket(
   group: any EventLoopGroup, handler: any ChannelInboundHandler & Sendable
-) throws -> EventLoopFuture<Void> {
+) throws(PresentableError) -> EventLoopFuture<Void> {
   let socketDirectory = FileManager.default.homeDirectoryForCurrentUser.appending(
     path: ".browsermux", directoryHint: .isDirectory)
   let socketDirectoryPath = socketDirectory.path
@@ -22,10 +12,26 @@ func asyncManageControlSocket(
   // clean up socket directory on startup
   let fileManager = FileManager.default
   if fileManager.fileExists(atPath: socketDirectoryPath) {
-    try fileManager.removeItem(atPath: socketDirectoryPath)
+      do {
+          try fileManager.removeItem(atPath: socketDirectoryPath)
+      } catch {
+          throw PresentableError(
+            messageText: "BrowserMux failed to start",
+            informativeText: "Failed to delete directory \(socketDirectoryPath) on startup.",
+            innerError: error
+          )
+      }
   }
-  try fileManager.createDirectory(
-    atPath: socketDirectoryPath, withIntermediateDirectories: false, attributes: nil)
+  do {
+      try fileManager.createDirectory(
+        atPath: socketDirectoryPath, withIntermediateDirectories: false, attributes: nil)
+  } catch {
+      throw PresentableError(
+        messageText: "BrowserMux failed to start",
+        informativeText: "Failed to create directory \(socketDirectoryPath) on startup.",
+        innerError: error
+      )
+  }
 
   let socketPath = socketDirectory.appending(path: "ctl.sock", directoryHint: .notDirectory).path
   let bootstrap = ServerBootstrap(group: group)
@@ -38,7 +44,16 @@ func asyncManageControlSocket(
       channel.pipeline.addHandler(EchoHandler())
     }
 
-  let channel = try bootstrap.bind(unixDomainSocketPath: socketPath).wait()
+  let channel: any Channel
+  do {
+      channel = try bootstrap.bind(unixDomainSocketPath: socketPath).wait()
+  } catch {
+      throw PresentableError(
+        messageText: "BrowserMux failed to start",
+        informativeText: "Failed to listen on socket \(socketPath) on startup.",
+        innerError: error
+      )
+  }
   return channel.closeFuture
 }
 
