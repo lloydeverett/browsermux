@@ -12,6 +12,6 @@ struct BrowserMuxApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-        }
+        }.windowStyle(.hiddenTitleBar)
     }
 }
