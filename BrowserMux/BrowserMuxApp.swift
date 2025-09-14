@@ -55,8 +55,12 @@ struct BrowserMuxApp: App {
             Task {
                 await presentError(err:
                     PresentableError(
-                        messageText: "Failed to listen for control instructions",
-                        informativeText: "An unexpected error occurred while listening for control instructions. You may need to restart the application to ensure proper functioning. Additional technical details have been printed to the console.",
+                        messageText: "BrowserMux failed to listen for control instructions",
+                        informativeText: """
+                                         An unexpected error occurred while listening for control instructions. \
+                                         You may need to restart the application to ensure proper functioning. \
+                                         Additional technical details have been printed to the console.
+                                         """,
                         innerError: err)
                 )
             }
