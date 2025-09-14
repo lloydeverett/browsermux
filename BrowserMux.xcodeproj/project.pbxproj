@@ -6,6 +6,12 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		6EBA23402E7682AA0080074E /* NIO in Frameworks */ = {isa = PBXBuildFile; productRef = 6EBA233F2E7682AA0080074E /* NIO */; };
+		6EBA23422E7682AA0080074E /* NIOCore in Frameworks */ = {isa = PBXBuildFile; productRef = 6EBA23412E7682AA0080074E /* NIOCore */; };
+		6EBA23442E7682AA0080074E /* NIOHTTP1 in Frameworks */ = {isa = PBXBuildFile; productRef = 6EBA23432E7682AA0080074E /* NIOHTTP1 */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		6E4F65982E6DEDE5001C976F /* BrowserMux.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BrowserMux.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +29,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6EBA23442E7682AA0080074E /* NIOHTTP1 in Frameworks */,
+				6EBA23422E7682AA0080074E /* NIOCore in Frameworks */,
+				6EBA23402E7682AA0080074E /* NIO in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +74,9 @@
 			);
 			name = BrowserMux;
 			packageProductDependencies = (
+				6EBA233F2E7682AA0080074E /* NIO */,
+				6EBA23412E7682AA0080074E /* NIOCore */,
+				6EBA23432E7682AA0080074E /* NIOHTTP1 */,
 			);
 			productName = BrowserMux;
 			productReference = 6E4F65982E6DEDE5001C976F /* BrowserMux.app */;
@@ -94,6 +106,9 @@
 			);
 			mainGroup = 6E4F658F2E6DEDE5001C976F;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				6EBA233E2E7682AA0080074E /* XCRemoteSwiftPackageReference "swift-nio" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 6E4F65992E6DEDE5001C976F /* Products */;
 			projectDirPath = "";
@@ -335,6 +350,35 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6EBA233E2E7682AA0080074E /* XCRemoteSwiftPackageReference "swift-nio" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-nio.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.86.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6EBA233F2E7682AA0080074E /* NIO */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6EBA233E2E7682AA0080074E /* XCRemoteSwiftPackageReference "swift-nio" */;
+			productName = NIO;
+		};
+		6EBA23412E7682AA0080074E /* NIOCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6EBA233E2E7682AA0080074E /* XCRemoteSwiftPackageReference "swift-nio" */;
+			productName = NIOCore;
+		};
+		6EBA23432E7682AA0080074E /* NIOHTTP1 */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6EBA233E2E7682AA0080074E /* XCRemoteSwiftPackageReference "swift-nio" */;
+			productName = NIOHTTP1;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 6E4F65902E6DEDE5001C976F /* Project object */;
 }

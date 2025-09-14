@@ -1,0 +1,39 @@
+# Xcode user settings (user-specific, should not be committed)
+xcuserdata/
+
+# Xcode workspace user settings
+*.xcuserstate
+
+# Build products
+build/
+DerivedData/
+
+# Swift Package Manager
+# Uncomment these if you want to ignore SPM dependencies and resolution files
+# Packages/
+# Package.pins
+# Package.resolved
+
+# App packaging
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Playgrounds
+timeline.xctimeline
+playground.xcworkspace
+
+# Backup files
+*.swp
+*~.nib
+
+# Xcode project user files (ignore all user-specific but keep defaults)
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+!default.pbxuser
+!default.mode1v3
+!default.mode2v3
+!default.perspectivev3
+
