@@ -87,7 +87,7 @@ final class HTTPHandler: ChannelInboundHandler {
             .init(version: head.version, status: .ok, headers: headers)
         )), promise: nil)
         context.write(self.wrapOutboundOut(.body(.byteBuffer(responseBuffer))), promise: nil)
-        
+
         // Write the response end and close the connection
         let promise = context.channel.eventLoop.makePromise(of: Void.self)
         context.writeAndFlush(self.wrapOutboundOut(.end(nil)), promise: promise)
