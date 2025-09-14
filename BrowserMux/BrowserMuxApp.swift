@@ -19,12 +19,12 @@ struct PresentableError: Error {
 
 @MainActor
 func presentError(err: PresentableError) {
+    print("fatal error: \(err.innerError)")
     let alert = NSAlert()
     alert.messageText = err.messageText
     alert.informativeText = err.informativeText
     alert.alertStyle = .warning
     alert.addButton(withTitle: "OK")
-    print("fatal error: \(err.innerError)")
     let _ = alert.runModal()
 }
 
