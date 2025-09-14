@@ -2,21 +2,21 @@ import Foundation
 import NIO
 import NIOPosix
 
-func syncManageControlSockets(
+func debugSyncManageControlSocket(
     handler: any ChannelInboundHandler & Sendable
 ) {
     let group = MultiThreadedEventLoopGroup(numberOfThreads: System.coreCount)
     defer {
         try! group.syncShutdownGracefully()
     }
-    try! startManagingControlSockets(group: group, handler: EchoHandler()).wait()
+    try! asyncManageControlSocket(group: group, handler: EchoHandler()).wait()
 }
 
-func startManagingControlSockets(
+func asyncManageControlSocket(
   group: any EventLoopGroup, handler: any ChannelInboundHandler & Sendable
 ) throws -> EventLoopFuture<Void> {
   let socketDirectory = FileManager.default.homeDirectoryForCurrentUser.appending(
-    path: ".unisocket", directoryHint: .isDirectory)
+    path: ".browsermux", directoryHint: .isDirectory)
   let socketDirectoryPath = socketDirectory.path
 
   // clean up socket directory on startup
@@ -27,7 +27,7 @@ func startManagingControlSockets(
   try fileManager.createDirectory(
     atPath: socketDirectoryPath, withIntermediateDirectories: false, attributes: nil)
 
-  let socketPath = socketDirectory.appending(path: "mysock.sock", directoryHint: .notDirectory).path
+  let socketPath = socketDirectory.appending(path: "ctl.sock", directoryHint: .notDirectory).path
   let bootstrap = ServerBootstrap(group: group)
     // Specify channel options as needed
     .serverChannelOption(
@@ -39,9 +39,6 @@ func startManagingControlSockets(
     }
 
   let channel = try bootstrap.bind(unixDomainSocketPath: socketPath).wait()
-
-  print("Server listening on Unix domain socket at \(socketPath)")
-
   return channel.closeFuture
 }
 
