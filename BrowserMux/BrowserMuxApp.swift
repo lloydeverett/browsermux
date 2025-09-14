@@ -8,6 +8,8 @@
 import Foundation
 import NIO
 import NIOPosix
+import NIOCore
+import NIOHTTP1
 import SwiftUI
 import Cocoa
 
@@ -46,7 +48,7 @@ struct BrowserMuxApp: App {
         group = MultiThreadedEventLoopGroup(numberOfThreads: 1)
         let promise: EventLoopFuture<Void>
         do {
-            promise = try listenOnControlSocket(group: group, handler: HTTPHandler())
+            promise = try listenOnControlSocket(group: group, requestHandler: handleRequest)
         } catch {
             presentError(err: error)
             exit(EXIT_FAILURE)
