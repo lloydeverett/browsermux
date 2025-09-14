@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6E55C0322E76FD2A0034EE61 /* SwiftTerm in Frameworks */ = {isa = PBXBuildFile; productRef = 6E55C0312E76FD2A0034EE61 /* SwiftTerm */; };
 		6EBA23402E7682AA0080074E /* NIO in Frameworks */ = {isa = PBXBuildFile; productRef = 6EBA233F2E7682AA0080074E /* NIO */; };
 		6EBA23422E7682AA0080074E /* NIOCore in Frameworks */ = {isa = PBXBuildFile; productRef = 6EBA23412E7682AA0080074E /* NIOCore */; };
 		6EBA23442E7682AA0080074E /* NIOHTTP1 in Frameworks */ = {isa = PBXBuildFile; productRef = 6EBA23432E7682AA0080074E /* NIOHTTP1 */; };
@@ -31,6 +32,7 @@
 			files = (
 				6EBA23442E7682AA0080074E /* NIOHTTP1 in Frameworks */,
 				6EBA23422E7682AA0080074E /* NIOCore in Frameworks */,
+				6E55C0322E76FD2A0034EE61 /* SwiftTerm in Frameworks */,
 				6EBA23402E7682AA0080074E /* NIO in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -77,6 +79,7 @@
 				6EBA233F2E7682AA0080074E /* NIO */,
 				6EBA23412E7682AA0080074E /* NIOCore */,
 				6EBA23432E7682AA0080074E /* NIOHTTP1 */,
+				6E55C0312E76FD2A0034EE61 /* SwiftTerm */,
 			);
 			productName = BrowserMux;
 			productReference = 6E4F65982E6DEDE5001C976F /* BrowserMux.app */;
@@ -108,6 +111,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				6EBA233E2E7682AA0080074E /* XCRemoteSwiftPackageReference "swift-nio" */,
+				6E55C0302E76FD2A0034EE61 /* XCRemoteSwiftPackageReference "SwiftTerm" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 6E4F65992E6DEDE5001C976F /* Products */;
@@ -352,6 +356,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		6E55C0302E76FD2A0034EE61 /* XCRemoteSwiftPackageReference "SwiftTerm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/migueldeicaza/SwiftTerm.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.5.0;
+			};
+		};
 		6EBA233E2E7682AA0080074E /* XCRemoteSwiftPackageReference "swift-nio" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-nio.git";
@@ -363,6 +375,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		6E55C0312E76FD2A0034EE61 /* SwiftTerm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6E55C0302E76FD2A0034EE61 /* XCRemoteSwiftPackageReference "SwiftTerm" */;
+			productName = SwiftTerm;
+		};
 		6EBA233F2E7682AA0080074E /* NIO */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 6EBA233E2E7682AA0080074E /* XCRemoteSwiftPackageReference "swift-nio" */;
